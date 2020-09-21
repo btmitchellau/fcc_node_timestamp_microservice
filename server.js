@@ -18,21 +18,19 @@ app.get('/api/timestamp/:date_string', (req, res) => {
   if (/\d{5,}/.test(req.params.date_string)) {
     res.json({
       unix: req.params.date_string,
-      utc : new Date(parseInt(req.params.date_string, 10)).toUTCString();
+      utc: new Date(parseInt(req.params.date_string, 10)).toUTCString(),
     });
   } else {
-    let theDate = new Date(req.params.date_string);
-    if (theDate.toUTCString() == 'Invalid Date') {
-      res.json({error: 'Invalid Date'});
+    const theDate = new Date(req.params.date_string);
+    if (theDate.toUTCString() === 'Invalid Date') {
+      res.json({ error: 'Invalid Date' });
     } else {
       res.json({
         unix: theDate.valueOf(),
-        utc : theDate.toUTCString()
-      })
+        utc: theDate.toUTCString(),
+      });
     }
-  };
+  }
 });
 
-const listener = app.listen(process.env.PORT, function() {
-  console.log(`Your app is listening on port ${  listener.address().port}`);
-});
+app.listen(process.env.PORT);
